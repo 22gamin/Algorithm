@@ -12,6 +12,7 @@ def solution(array):
     for j in a:
         maxs.append(array.count(j))
         
+        #최대값일 때 array의 값 저장
         if s < array.count(j):
             s = array.count(j)
             t = j
