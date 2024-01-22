@@ -1,0 +1,7 @@
+def solution(n):
+    answer = 2
+    for i in range(2,n):
+        if i*i == n:
+            answer = 1
+    
+    return answer
