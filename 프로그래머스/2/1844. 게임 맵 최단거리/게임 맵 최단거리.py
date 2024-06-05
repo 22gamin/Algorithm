@@ -28,7 +28,7 @@ def solution(maps):
                 maps[ddx][ddy] = maps[x][y] + 1
     
 
-    if maps[n-1][m-1] == 1:
+    if visited[n-1][m-1] == 0:
         return -1
     return maps[n-1][m-1]
 
