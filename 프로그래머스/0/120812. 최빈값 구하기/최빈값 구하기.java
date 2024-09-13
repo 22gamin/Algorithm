@@ -4,7 +4,7 @@ import java.util.*;
 class Solution {
     public int solution(int[] array) {
         
-        HashMap<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         
         // 각 원소의 개수 넣음
         for (int i : array){
