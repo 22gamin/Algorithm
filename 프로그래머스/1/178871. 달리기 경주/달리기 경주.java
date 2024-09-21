@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
     public String[] solution(String[] players, String[] callings) {
-        String[] answer = new String[players.length];
+
         Map<String, Integer> play = new HashMap<>();
         
         // hashmap에 값 넣기
@@ -25,11 +25,7 @@ class Solution {
             players[a] = beforePlayer;
         }
         
-        //입력
-        for (String s : play.keySet()){
-            answer[play.get(s)] = s;
-        }
         
-        return answer;
+        return players;
     }
 }
