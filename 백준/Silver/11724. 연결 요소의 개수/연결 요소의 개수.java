@@ -1,0 +1,65 @@
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+	
+	static List<List<Integer>> graph = new ArrayList<>();
+	static int cnt = 0;
+	static boolean[] visited;
+	
+	static void net(int start) {
+		
+		for(int num : graph.get(start)) {
+			if (!visited[num]) {
+				visited[num] = true;
+				net(num);
+			}
+		}
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException,IOException {
+		
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int N = Integer.parseInt(st.nextToken()); //서버의 개수
+		int M = Integer.parseInt(st.nextToken()); // 간선
+	
+		for (int i = 0; i<N+1; i++) {
+			graph.add(new ArrayList<>());
+		}
+		
+		visited = new boolean[N+1];
+
+		// 간선 입력
+		for(int i = 0; i<M; i++) {
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+				
+			graph.get(a).add(b);
+			graph.get(b).add(a);
+		}
+
+
+		
+		// 모든 노드 돌기
+		for (int k = 1; k < N+1; k++) {
+			
+			if (!visited[k]) {
+				visited[k] = true;
+				cnt++;
+				net(k);
+			}
+		}
+		
+		System.out.println(cnt);
+	}
+
+}
