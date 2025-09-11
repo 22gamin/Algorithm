@@ -1,43 +1,36 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class Main {
-    static int N;
-    static int[] col;   // col[i] = i번째 행에 놓인 퀸의 열 위치
-    static int answer = 0;
-
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-
-        col = new int[N];
-        backtrack(0);
-
-        System.out.println(answer);
-    }
-
-    static void backtrack(int row) {
-        if (row == N) {  // N개의 퀸을 전부 놓은 경우
-            answer++;
-            return;
-        }
-
-        for (int c = 0; c < N; c++) {
-            col[row] = c;
-            if (isSafe(row)) {
-                backtrack(row + 1);
-            }
-        }
-    }
-
-    static boolean isSafe(int row) {
-        for (int i = 0; i < row; i++) {
-            // 같은 열에 위치하거나, 대각선에 위치한 경우
-            if (col[i] == col[row] || Math.abs(row - i) == Math.abs(col[row] - col[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
+	static int N, ans;
+	static boolean[] col, slash, bSlash;
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		col = new boolean[N+1];
+		slash = new boolean[2*N+1];
+		bSlash = new boolean[2*N];
+		
+		ans=0;
+		setQueen(1);
+		System.out.println(ans);
+		
+	}
+	
+	static void setQueen(int row) {
+		if(row > N) {
+			++ans;
+			return;
+		}
+		
+		for(int c=1; c<=N; c++) {
+			
+			if(col[c] || slash[row+c] || bSlash[row-c+N]) continue; // 가지치기
+			// 퀸 배치 내용 자료구조에 기록
+			col[c] = slash[row+c] = bSlash[row-c+N] = true;
+			
+			// 다음 퀸 놓기
+			setQueen(row+1);
+			col[c] = slash[row+c] = bSlash[row-c+N] = false;
+		}
+	}
 }
