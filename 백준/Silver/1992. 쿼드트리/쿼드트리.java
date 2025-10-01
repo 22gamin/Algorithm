@@ -7,9 +7,7 @@ public class Main {
 	static String answer="";
 	
 	static void div(int row, int col,int n) {	//(x, y, 길이)
-		if(n == 0) {
-			return;
-		}
+
 		int sum = 0;
 		for(int i = row; i<row+n; i++) {
 			for(int j = col; j<col+n; j++) {
@@ -21,7 +19,6 @@ public class Main {
 			return ;
 		}
 		else if (sum ==n*n) {
-
 			answer += '1';	
 			return ;
 		}
