@@ -1,36 +1,44 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-	static int N, ans;
-	static boolean[] col, slash, bSlash;
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		N = sc.nextInt();
-		col = new boolean[N+1];
-		slash = new boolean[2*N+1];
-		bSlash = new boolean[2*N];
-		
-		ans=0;
-		setQueen(1);
-		System.out.println(ans);
-		
-	}
+	static int N, col[],cnt;
 	
-	static void setQueen(int row) {
-		if(row > N) {
-			++ans;
+	public static void queen(int row) {
+		
+		if(row ==N+1) {
+			cnt++;
 			return;
 		}
 		
-		for(int c=1; c<=N; c++) {
+		for(int i =1; i<N+1; i++) {
+			col[row] = i;
 			
-			if(col[c] || slash[row+c] || bSlash[row-c+N]) continue; // 가지치기
-			// 퀸 배치 내용 자료구조에 기록
-			col[c] = slash[row+c] = bSlash[row-c+N] = true;
-			
-			// 다음 퀸 놓기
-			setQueen(row+1);
-			col[c] = slash[row+c] = bSlash[row-c+N] = false;
+			if (check(row)) {
+				queen(row+1);
+			}
 		}
 	}
+	
+	public static boolean check(int row) {
+		for(int i =1; i<=row-1; i++) {
+			if(col[row] == col[i] || Math.abs(row-i) == Math.abs(col[row]-col[i])){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+
+	public static void main(String[] args) throws Exception{
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		
+		//대각선, 행, 열 모두 못 놓음
+		col = new int[N+1];
+		queen(1);
+		
+		System.out.println(cnt);
+	}
+
 }
