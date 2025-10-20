@@ -26,18 +26,4 @@ public class Main {
 
 		
 	}
-
-	static int fib(int n) {
-		if(n==0) {
-			zero++;
-			return 0;
-			
-		} else if(n==1) {
-			one++;
-			return 1;
-		} else {
-			return fib(n-1) + fib(n-2);
-		}
-			
-		}
 }
