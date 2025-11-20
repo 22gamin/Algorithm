@@ -1,56 +1,55 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
+	static int N,C;
+	static List<Integer> home = new ArrayList<>();
+	
+	static boolean check(long mid) {
+		int count = 1;
+		int lastPos = home.get(0);
+		
+		for(int i = 0; i<home.size(); i++) {
+			if(home.get(i) - lastPos >= mid) {
+				count++;
+				lastPos = home.get(i);
+			}
+		}
+		
+		return count >= C;
+	}
+
+	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		int n = Integer.parseInt(st.nextToken());
-		int c = Integer.parseInt(st.nextToken());
+		N = Integer.parseInt(st.nextToken());
+		C = Integer.parseInt(st.nextToken());
 
-		int[] x = new int[n];
-		for(int i=0; i<n; i++) {
-			x[i] = Integer.parseInt(br.readLine());
-		}
+		for(int n = 0; n<N; n++) {
+			home.add(Integer.parseInt(br.readLine()));
+		} //입력 끝
+		Collections.sort(home);
 		
-		Arrays.sort(x);
+		long low = 1;
+		long high = home.get(home.size()-1) - home.get(0);
 		
-		// 최대, 최소 간격
-		int low = 1;
-		int high = x[n-1]-x[0];
-		int ans = 0;
+		long dis = 0;
 		
-		while(low<=high) {
-			int mid = (low+high)/2;
+		
+		
+		while(low <= high) {
+			long mid = low + (high-low)/2;
 			
-			if(canPlace(x, c, mid)) {
-				ans = mid;
-				low = mid+1;
+			if(check(mid)) {
+				dis = mid;
+				
+				low = mid + 1;
 			} else {
 				high = mid-1;
 			}
 		}
-		
-		System.out.println(ans);
+		System.out.println(dis);
 	}
-	
-	private static boolean canPlace(int[] x, int c, int d) {
-		int cnt=1;
-		int last=x[0];
-		
-		for(int i=1; i<x.length; i++) {
-			if(x[i]-last>=d) {
-				cnt++;
-				last=x[i];
-				if(cnt>=c) return true;
-			}
-		}
-		
-		return false;
-	}
+
 }
