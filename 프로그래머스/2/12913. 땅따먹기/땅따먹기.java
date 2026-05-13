@@ -1,6 +1,6 @@
 class Solution {
     int solution(int[][] land) {
-        // System.out.println(typeof(land.length-1));
+
         int[][] dp = new int[land.length][4];
         dp[0][0] = land[0][0];
         dp[0][1] = land[0][1];
