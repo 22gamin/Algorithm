@@ -1,0 +1,43 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+    public static void main(String[] args) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
+        int T = Integer.parseInt(br.readLine());
+
+        String[] numSort = {"ZRO", "ONE", "TWO", "THR", "FOR", "FIV", "SIX", "SVN", "EGT", "NIN"};
+
+        for(int tc = 1; tc<T+1; tc++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            sb.append(st.nextToken()).append(" ");
+
+            //단어의 개수, 문자열의 글자수 x
+            int wordCnt = Integer.parseInt(st.nextToken());
+
+            Map<String, Integer> num = new HashMap<>();
+            st = new StringTokenizer(br.readLine());
+
+            //개수 세기
+            for(int i = 0; i<wordCnt; i++){
+                String word = st.nextToken();
+                num.put(word, num.getOrDefault(word, 0)+1);
+            }
+
+            //정답 문자열 생성
+            for(String standard : numSort){
+                if (num.containsKey(standard)){
+                    int value = num.get(standard);
+
+                    for(int cnt = 0; cnt < value; cnt++){
+                        sb.append(standard).append(" ");
+                    }
+                }
+            }
+            sb.append("\n");
+        }
+        System.out.print(sb);
+    }
+}
