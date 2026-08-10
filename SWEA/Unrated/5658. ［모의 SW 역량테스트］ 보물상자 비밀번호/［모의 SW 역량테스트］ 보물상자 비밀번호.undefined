@@ -1,0 +1,49 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+    public static void main(String[] args) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        int T = Integer.parseInt(br.readLine());
+
+        for(int tc = 1; tc<T+1; tc++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken());
+            int K = Integer.parseInt(st.nextToken());
+
+            String nNums = br.readLine();
+
+            //1, B, 3, B, 3, B, 8, 1, F, 7, 5, E
+            //E, 1, B, 3, B, 3, B, 8, 1, F, 7, 5
+
+            Deque<Character> dq = new ArrayDeque<>();
+            TreeSet<Long> ts = new TreeSet<>();
+
+            for(char c : nNums.toCharArray()) dq.offerLast(c);
+
+            for(int i = 0; i<N/4; i++){
+                StringBuilder num = new StringBuilder();
+                int c = 0;
+
+                for(char ch : dq){
+                    num.append(ch);
+                    c++;
+                    if(c == N/4){
+                        ts.add(Long.parseLong(num.toString(), 16));
+                        num.setLength(0);
+                        c=0;
+                    }
+                }
+                dq.offerFirst(dq.pollLast());
+            }
+            List<Long> list = new ArrayList<>(ts);
+
+            //K번째 작은 수가 아니라 K번째 큰 수니까 뒤에서 K번째!
+            long answer = list.get(list.size()-K);
+
+            sb.append('#').append(tc).append(" ").append(answer).append("\n");
+        }
+        System.out.print(sb);
+    }
+}
