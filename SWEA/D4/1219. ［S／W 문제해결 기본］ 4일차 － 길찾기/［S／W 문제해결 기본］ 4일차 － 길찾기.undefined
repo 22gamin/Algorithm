@@ -1,0 +1,58 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+    public static void main(String[] args) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
+        for(int tc = 1; tc<11; tc++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            sb.append('#').append(Integer.parseInt(st.nextToken())).append(" ");
+
+            int road = Integer.parseInt(st.nextToken()); //길의 개수
+
+            //홀은 시작 정점 번호, 짝은 도착 정점 번호
+            //그러므로 N*2만큼 숫자를 입력받음
+            int[] data1 = new int[100];
+            int[] data2 = new int[100];
+
+            st = new StringTokenizer(br.readLine());
+
+            for(int i = 0; i< road; i++){
+                int start = Integer.parseInt(st.nextToken());
+                int end = Integer.parseInt(st.nextToken());
+
+                if (data1[start] == 0) data1[start] = end;
+                else data2[start] = end;
+            } //입력 받기
+
+            //출발점 0, 도착점 99
+            if (data1[0] == 0) {
+                sb.append(0).append("\n");
+                continue;
+            }
+
+            Queue<int[]> queue = new ArrayDeque<>();
+            //출발점부터
+            queue.add(new int[]{0, data1[0]});
+            if (data2[0] != 0) queue.add(new int[]{0, data2[0]});
+            int poss = 0;
+
+            while(!queue.isEmpty()){
+                int[] curr = queue.poll();
+
+                //찾음
+                if (curr[1] == 99){
+                    poss = 1;
+                    break;
+                }
+                //아직
+                if(data1[curr[1]] != 0) queue.add(new int[]{curr[1], data1[curr[1]]});
+                if(data2[curr[1]] != 0) queue.add(new int[]{curr[1], data2[curr[1]]});
+            }
+            sb.append(poss).append("\n");
+        }
+        System.out.print(sb);
+    }
+}
